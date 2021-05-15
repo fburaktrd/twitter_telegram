@@ -13,7 +13,7 @@ disp=updater.dispatcher
 def get_id(update:Update,context:CallbackContext):
     bot.send_message(
         chat_id=update.effective_chat.id,
-        text="Elon Musk her tweet attığında bildirim alacaksınız. Bu işlemi iptal etmek için /dur yazınız."
+        text="You will be informed when Elen Musk tweeted. If you want to stop this bot type /stop."
     )
 
     with open("ids.txt","r+") as ids:
@@ -24,7 +24,7 @@ def get_id(update:Update,context:CallbackContext):
 def del_id(update:Update,context:CallbackContext):
     bot.send_message(
         chat_id=update.effective_chat.id,
-        text="Size haber uçurmak güzeldi..."
+        text="See you later..."
     )
     removed=update.effective_chat.id
 
@@ -37,23 +37,23 @@ def del_id(update:Update,context:CallbackContext):
                 ids.write(f"{i}\n")
         
 
-def sontw(update:Update,context:CallbackContext):
+def lastw(update:Update,context:CallbackContext):
     with open("ftweet.txt","r") as ft:
         tweet_link=ft.readlines()[0]
     
-    bot.send_message(chat_id=update.effective_chat.id,text=f"Elon Musk'ın son tweeti\n|\n|\n -->{tweet_link}")
+    bot.send_message(chat_id=update.effective_chat.id,text=f"Elon Musk's last tweet\n|\n|\n -->{tweet_link}")
 
 
 def message(s):
     with open("ids.txt","r") as ids:
         for ch_id in [i.strip("\n") for i in ids.readlines()]:
-            bot.send_message(chat_id=ch_id,text="Elon Musk yeni bir tweet attı !\n\nTweet :"+s)
+            bot.send_message(chat_id=ch_id,text="Elon Musk has just tweeted !\n\nTweet :"+s)
 
 
 start_value = CommandHandler("basla",get_id)
 start_value2=CommandHandler("start",get_id)
-sntw=CommandHandler("sontw",sontw)
-end_value=CommandHandler("dur",del_id)
+sntw=CommandHandler("sontw",lastw)
+end_value=CommandHandler("stop",del_id)
 
 disp.add_handler(start_value)
 disp.add_handler(start_value2)
